@@ -5,5 +5,5 @@ from (
     group by director
     having sum(gross) > 1000000
 ) as altiIncassi natural join directorawards
-where result = "won"
+where result = 'won'
 order by (award, year, director);
