@@ -13,8 +13,8 @@ from winners natural join directors
 where yearofbirth = (select max(yearofbirth)
     from winners natural join directors)
 union
-select distinct director, 'oldest' as feature
+(select distinct director, 'oldest' as feature
 from winners natural join directors
 where yearofbirth = (select min(yearofbirth)
-    from winners natural join directors)
+    from winners natural join directors))
 order by director, feature;
