@@ -2,11 +2,11 @@ WITH winners AS
 (
     select director 
     from directorawards 
-    where award like '%oscar%' and result = 'won'
+    where lower(award) like '%oscar%' and result = 'won'
     union
     select director 
     from movieawards natural join movies
-    where award like '%oscar%' and result = 'won'
+    where lower(award) like '%oscar%' and result = 'won'
 )
 select distinct director, 'youngest' as feature
 from winners natural join directors
