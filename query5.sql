@@ -1,6 +1,6 @@
-select movies.title, movies.year, COALESCE(TRUNC(vinti/candidature,2), -1) as success_rate
+select movies.title, movies.year, COALESCE(TRUNC(vinti::decimal/candidature,2), -1) as success_rate
 from movies left join (
-    select title, year, count(CASE WHEN result='won' THEN 1 ELSE 0 END) as vinti, count(award) as candidature
+    select title, year, count(*) FILTER (WHERE result='won') as vinti, count(*) as candidature
     from movieawards
     group by title, year
 ) as tab1
