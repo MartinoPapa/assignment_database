@@ -2,9 +2,10 @@ select title, year
 from movieawards
 where year = (select max(year)
     from movieawards
+    where result = 'won'
     group by title, year
-    having count(CASE WHEN result='won' THEN 1 ELSE 0 END) >= 3
-)
+    having count(*) >= 3
+) and result = 'won'
 group by title, year
-having count(CASE WHEN result='won' THEN 1 ELSE 0 END) >= 3
+having count(*) >= 3
 order by title, year;
