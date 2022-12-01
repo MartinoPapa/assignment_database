@@ -13,5 +13,5 @@ where result='won' and lower(award) like '%best director%')
 union
 (select distinct director
 from directorawards inner join year_spilberg_3 on year_spilberg_3.year = directorawards.year
-where result='won' and lower(award) like '%best director%')
+where result='won')
 order by director;
