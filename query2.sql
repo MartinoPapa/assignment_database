@@ -1,11 +1,9 @@
-select title, year
+select movieawards.title, movieawards.year
 from movieawards
-where year = (select max(year)
-    from movieawards
+where year = (select max(movies.year)
+    from movieawards natural join movies
     where result = 'won'
-    group by title, year
-    having count(*) >= 3
-) and result = 'won'
-group by title, year
-having count(*) >= 3
-order by title, year;
+)
+group by movieawards.title, movieawards.year
+having count(*) > 2
+order by movieawards.title, movieawards.year;

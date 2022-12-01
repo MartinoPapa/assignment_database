@@ -1,10 +1,16 @@
-select award, year, director
+select concat(award, ', best director') as award, year, directorawards.director as director
 from (
-    select director from movies
-    where (date_part('year', CURRENT_DATE)-year <= 5)
-    group by director  
-    having sum(gross) > 1000000
+    select distinct director from movies
+    where (date_part('year', CURRENT_DATE)-year <= 5) and gross  > 1000000
 ) as t1
-natural join directorawards
+inner join directorawards on t1.director = directorawards.director
 where result = 'won'
-order by (award, year, director);
+union
+select award, year, t3.director as director
+from (
+    select distinct director from movies
+    where (date_part('year', CURRENT_DATE)-year <= 5) and gross  > 1000000
+) as t2
+inner join ((select title, year, award from movieawards where result = 'won' and lower(award) like '%best director%') as t4
+    natural join movies) as t3 on t2.director = t3.director
+order by award, year, director;
